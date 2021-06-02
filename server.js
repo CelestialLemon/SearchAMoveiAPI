@@ -13,4 +13,9 @@ server.get("/", (req, res) => {
     res.send("Hello");
 })
 
+server.get("/kira", (req, res) =>
+{
+    res.send("this is kira");
+})
+
 server.listen(process.env.PORT, () => console.log("listening on PORT : " + process.env.PORT));
