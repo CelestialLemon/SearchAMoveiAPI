@@ -9,7 +9,7 @@ const UsersRouter = require('./routes/users')
 
 const server = express();
 
-server.use(cors({credentials : true, origin : 'http://localhost:3000'}))
+server.use(cors({credentials : true, origin : ['http://localhost:3000','https://search-a-movie-22.herokuapp.com/']}))
 server.use(bodyParser.urlencoded({ extended: false }))
 server.use(bodyParser.json());
 
