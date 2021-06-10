@@ -1,5 +1,5 @@
-let details = "Asta and Yuno";
-let detailsShort = details.substring(0, 50) + "...";
+const dbConnection = require('./models/db.connect')
+const UserModel = require('./models/user.model.js');
 
-
-console.log(detailsShort);
+const newUser = UserModel({ username : "Ashutosh", password : "Nightmare22"});
+newUser.save();

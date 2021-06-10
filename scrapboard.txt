@@ -1,0 +1,92 @@
+server.get("/", (req, res) => {
+    res.send("Hello");
+})
+
+server.post("/users", async (req, res) =>
+{
+    try
+    {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        users.push({"username" : req.body.username, "password" : hashedPassword});
+        res.status(201).send();
+    }catch(err)
+    {
+        console.log(err);
+    }
+})
+
+server.get("/users", (req, res) =>
+{
+    res.send(users);
+})
+
+server.post("/users/login", async (req, res) =>
+{
+    const user = users.find(user => user.username === req.body.username)
+    if(user == null)
+    {
+        return res.send("User not found");
+    }
+    
+    try
+    {
+        if(await bcrypt.compare(req.body.password, user.password))
+        {
+            res.status(200).send("Sucess");
+        }
+        else
+        {
+            res.status(401).send("Failure")
+        }
+    }catch(err)
+    {
+        console.log(err)
+        res.status(500).send();
+    }
+})
+
+//jwt
+const authenticateToken = (req, res, next) =>
+{
+    if(!req.headers['authorization'])
+    return res.send("NO header");
+
+    const token = req.headers['authorization'].split(' ')[1];
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>
+    {
+        if(err)
+        {
+            res.send("Invalid token!");
+            return;
+        }
+        req.user = user;
+        next();
+    }
+    )
+}
+
+server.post("/login", authenticateToken, (req, res) =>
+{
+    //authenticate user
+    const user = users.find(user => user.username == req.user.username)
+    if(user == null)
+    return res.send("no such user");
+
+    if(user.password == req.user.password)
+    {
+        res.send("Logged In");
+
+    }
+    else
+    {
+        res.send("invalid credentials");
+    }
+})
+
+server.post("/generateToken", (req, res) =>
+{
+    users.push({"username" : req.body.username, "password" : req.body.password});
+    const accessToken = jwt.sign({"username" : req.body.username, "password" : req.body.password}, process.env.ACCESS_TOKEN_SECRET);
+    res.send(accessToken);
+})

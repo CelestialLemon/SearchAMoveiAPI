@@ -1,0 +1,37 @@
+POST http://localhost:4000/users
+Content-Type: application/json
+
+{
+    "username" : "Ashutosh",
+    "password" : "Nightmare"
+}
+
+###
+
+GET http://localhost:4000/users
+
+###
+POST http://localhost:4000/users/login
+Content-Type: application/json
+
+{
+    "username" : "Ashutosh",
+    "password" : "Nightmare"    
+}
+
+###
+
+POST http://localhost:4000/login
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFzaHV0b3NoIiwicGFzc3dvcmQiOiI0NTYiLCJpYXQiOjE2MjMwNTcwOTZ9.pBvBzvbf-mYSlFgcbU70cWDmtlLrCTvMI2Lj64_NnH0
+
+
+
+
+###
+POST  http://localhost:4000/generateToken
+Content-Type: application/json
+
+{
+    "username" : "Ashutosh",
+    "password" : "789"
+}
