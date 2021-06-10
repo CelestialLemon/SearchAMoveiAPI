@@ -10,6 +10,11 @@ var UserSchema = mongoose.Schema(
         password : {
             type : String,
             required : true
+        },
+
+        lists : {
+            type : Array,
+            required : false
         }
     }
 );

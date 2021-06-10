@@ -90,3 +90,161 @@ server.post("/generateToken", (req, res) =>
     const accessToken = jwt.sign({"username" : req.body.username, "password" : req.body.password}, process.env.ACCESS_TOKEN_SECRET);
     res.send(accessToken);
 })
+
+
+[nodemon] restarting due to changes...
+[nodemon] starting `node server.js`
+listening on PORT : 4000
+Connected to the database
+token found
+token valid
+procceding to add list...
+undefined
+[nodemon] restarting due to changes...
+[nodemon] starting `node server.js`
+listening on PORT : 4000
+token found
+token valid
+procceding to add list...
+Query {
+  _mongooseOptions: {},
+  _transforms: [],
+  _hooks: Kareem { _pres: Map(0) {}, _posts: Map(0) {} },
+  _executionCount: 0,
+  mongooseCollection: NativeCollection {
+    collection: null,
+    Promise: [Function: Promise],
+    _closed: false,
+    opts: {
+      autoIndex: true,
+      autoCreate: undefined,
+      schemaUserProvidedOptions: {},
+      capped: false,
+      Promise: [Function: Promise],
+      '$wasForceClosed': undefined
+    },
+    name: 'usermodels',
+    collectionName: 'usermodels',
+    conn: NativeConnection {
+      base: [Mongoose],
+      collections: [Object],
+      models: [Object],
+      config: {},
+      replica: false,
+      options: null,
+      otherDbs: [],
+      relatedDbs: {},
+      states: [Object: null prototype],
+      _readyState: 2,
+      _closeCalled: false,
+      _hasOpened: false,
+      plugins: [],
+      id: 0,
+      _queue: [],
+      _listening: false,
+      _connectionString: 'mongodb+srv://detonator22:uxzCvq1o2tZ9U6sp@cluster0.z6tgh.mongodb.net/searchmoviedatabase?retryWrites=true&w=majority',
+      _connectionOptions: [Object],
+      client: [MongoClient],
+      '$initialConnection': [Promise],
+      then: [Function (anonymous)],
+      catch: [Function (anonymous)],
+      name: 'searchmoviedatabase',
+      host: 'cluster0-shard-00-00.z6tgh.mongodb.net',
+      port: 27017,
+      user: 'detonator22',
+      pass: 'uxzCvq1o2tZ9U6sp'
+    },
+    queue: [],
+    buffer: true,
+    emitter: EventEmitter {
+      _events: [Object: null prototype] {},
+      _eventsCount: 0,
+      _maxListeners: undefined,
+      [Symbol(kCapture)]: false
+    }
+  },
+  model: Model { userModel },
+  schema: Schema {
+    obj: { username: [Object], password: [Object], lists: [Object] },
+    paths: {
+      username: [SchemaString],
+      password: [SchemaString],
+      lists: [SchemaArray],
+      _id: [ObjectId],
+      __v: [SchemaNumber]
+    },
+    aliases: {},
+    subpaths: { 'lists.$': [Mixed] },
+    virtuals: { id: [VirtualType] },
+    singleNestedPaths: {},
+    nested: {},
+    inherits: {},
+    callQueue: [],
+    _indexes: [],
+    methods: {},
+    methodOptions: {},
+    statics: {},
+    tree: {
+      username: [Object],
+      password: [Object],
+      lists: [Object],
+      _id: [Object],
+      __v: [Function: Number],
+      id: [VirtualType]
+    },
+    query: {},
+    childSchemas: [],
+    plugins: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    '$id': 1,
+    mapPaths: [],
+    s: { hooks: [Kareem] },
+    _userProvidedOptions: {},
+    options: {
+      typePojoToMixed: true,
+      typeKey: 'type',
+      id: true,
+      noVirtualId: false,
+      _id: true,
+      noId: false,
+      validateBeforeSave: true,
+      read: null,
+      shardKey: null,
+      autoIndex: null,
+      minimize: true,
+      discriminatorKey: '__t',
+      optimisticConcurrency: false,
+      versionKey: '__v',
+      capped: false,
+      bufferCommands: true,
+      strictQuery: false,
+      strict: true,
+      pluralization: true
+    },
+    '$globalPluginsApplied': true
+  },
+  op: 'findOne',
+  options: {},
+  _conditions: { username: 'Pawan' },
+  _fields: undefined,
+  _update: undefined,
+  _path: undefined,
+  _distinct: undefined,
+  _collection: NodeCollection {
+    collection: NativeCollection {
+      collection: null,
+      Promise: [Function: Promise],
+      _closed: false,
+      opts: [Object],
+      name: 'usermodels',
+      collectionName: 'usermodels',
+      conn: [NativeConnection],
+      queue: [],
+      buffer: true,
+      emitter: [EventEmitter]
+    },
+    collectionName: 'usermodels'
+  },
+  _traceFunction: undefined,
+  '$useProjection': true
+}
+Connected to the database

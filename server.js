@@ -6,6 +6,7 @@ const cors = require('cors');
 
 
 const UsersRouter = require('./routes/users')
+const ListsRouter = require('./routes/lists')
 
 const server = express();
 
@@ -14,7 +15,7 @@ server.use(bodyParser.urlencoded({ extended: false }))
 server.use(bodyParser.json());
 
 server.use('/users', UsersRouter);
-
+server.use('/lists', ListsRouter)
 
 
 

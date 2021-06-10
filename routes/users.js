@@ -21,7 +21,22 @@ router.post('/signup', async (req, res) =>
 
         const newUser = UserModel({
             "username" : req.body.username,
-            "password" : hashedPassword
+            "password" : hashedPassword,
+            "lists" : [
+                {
+                    "listName" : "Currently Watching",
+                    "shows" : []
+                },
+                {
+                    "listName" : "Watch Later",
+                    "shows" : []
+                },
+                {
+                    "listName" : "On Pause",
+                    "shows" : []
+                }
+
+            ]
         });
 
         try
