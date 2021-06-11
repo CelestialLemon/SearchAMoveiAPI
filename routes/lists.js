@@ -9,11 +9,11 @@ const userModel = require('../models/user.model');
 
 const authenticateToken = (req, res, next) =>
 {
-    
-    if(req.body.headers && req.body.headers['authorization'])
+    console.log(req.headers);   
+    if(req.headers && req.headers['authorization'])
     {
         console.log("token found");
-        const token = req.body.headers['authorization'].split(' ')[1];
+        const token = req.headers['authorization'].split(' ')[1];
        
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>
         {
@@ -45,9 +45,10 @@ const authenticateToken = (req, res, next) =>
 
 router.post("/addlist",authenticateToken, async (req, res) =>
 {
+    console.log(req.user);
     console.log("procceding to add list...");
     const userToUpdate = await UserModel.findOne({"username" : req.user.username});
-    userToUpdate.lists.push({"listName" : req.body.listName, "shows" : []});
+    userToUpdate.lists.push({"listName" : req.body.listName, "shows" : [], "color1" : req.body.color1 || "#ff0000", "color2" : req.body.color2 || "#8F00FF"});
 
     const updatedUser = await UserModel.findOneAndUpdate({ "username" : req.user.username}, userToUpdate, {useFindAndModify : false});
     console.log(updatedUser);
@@ -148,6 +149,22 @@ router.delete("/deleteshowfromlist", authenticateToken, async (req, res) =>
         });
     const updatedUser = await UserModel.findOneAndUpdate({"username" : req.user.username}, userToUpdate, {useFindAndModify : false})
     res.send({"msg" : "show deleted"});
+})
+
+
+//get functions
+router.get("/userlists", authenticateToken, async (req, res) =>
+{
+    console.log("Request for userlists at " + new Date());
+    const userData = await UserModel.findOne({"username" : req.user.username});
+    if(userData)
+    {
+        res.send(userData.lists);
+    }
+    else
+    {
+        res.send({"msg" : "not found"});
+    }
 })
 
 

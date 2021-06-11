@@ -54,11 +54,11 @@ router.post('/signup', async (req, res) =>
 
 const authenticateToken = (req, res, next) =>
 {
-    
-    if(req.body.headers && req.body.headers['authorization'])
+    console.log(req.headers)
+    if(req.headers && req.headers['authorization'])
     {
         console.log("token found");
-        const token = req.body.headers['authorization'].split(' ')[1];
+        const token = req.headers['authorization'].split(' ')[1];
        
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>
         {
