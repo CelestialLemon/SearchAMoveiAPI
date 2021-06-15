@@ -9,7 +9,6 @@ const userModel = require('../models/user.model');
 
 const authenticateToken = (req, res, next) =>
 {
-    console.log(req.headers);   
     if(req.headers && req.headers['authorization'])
     {
         console.log("token found");
@@ -48,11 +47,25 @@ router.post("/addlist",authenticateToken, async (req, res) =>
     console.log(req.user);
     console.log("procceding to add list...");
     const userToUpdate = await UserModel.findOne({"username" : req.user.username});
-    userToUpdate.lists.push({"listName" : req.body.listName, "shows" : [], "color1" : req.body.color1 || "#ff0000", "color2" : req.body.color2 || "#8F00FF"});
+    let listAlreadyExists = false;
+    userToUpdate.lists.map(list =>
+        {
+            if(list.listName === req.body.listName)
+            {
+                listAlreadyExists = true;
+               res.send({"msg" : "list already exists"});
+            }
 
-    const updatedUser = await UserModel.findOneAndUpdate({ "username" : req.user.username}, userToUpdate, {useFindAndModify : false});
-    console.log(updatedUser);
-    res.status(201).send({"msg" : "list added"});
+        });
+
+    if(!listAlreadyExists)
+    {
+        userToUpdate.lists.push({"listName" : req.body.listName, "shows" : []});
+
+        const updatedUser = await UserModel.findOneAndUpdate({ "username" : req.user.username}, userToUpdate, {useFindAndModify : false});
+        console.log(updatedUser);
+        res.status(201).send({"msg" : "list added"})
+    }
 })
 
 router.post("/addshowtolist", authenticateToken, async (req, res, next) =>
@@ -122,21 +135,23 @@ router.put('/updateProgress', authenticateToken, async (req, res) =>
 
 
 //delete functions
-router.delete("/deletelist", authenticateToken, async (req, res) =>
+router.post("/deletelist", authenticateToken, async (req, res) =>
 {
     console.log("Request to delete list at " + new Date());
     const userToUpdate = await UserModel.findOne({"username" : req.user.username});
     userToUpdate.lists = userToUpdate.lists.filter(list => list.listName !== req.body.listName);
-    console.log(userToUpdate.lists); 
+    console.log("list to delete " + req.body.listName); 
 
     const updatedUser = await UserModel.findOneAndUpdate({"username" : req.user.username}, userToUpdate, {useFindAndModify : false});
 
-    res.end();
+    res.send({"msg" : "list deleted successfully"});
 })
 
-router.delete("/deleteshowfromlist", authenticateToken, async (req, res) =>
+router.post("/deleteshowfromlist", authenticateToken, async (req, res) =>
 {
     console.log("Request to delete show from list at " + new Date());
+    console.log(req.body);
+
     const userToUpdate = await UserModel.findOne({"username" : req.user.username});
 
     userToUpdate.lists.map(list =>
@@ -166,6 +181,7 @@ router.get("/userlists", authenticateToken, async (req, res) =>
         res.send({"msg" : "not found"});
     }
 })
+
 
 
 

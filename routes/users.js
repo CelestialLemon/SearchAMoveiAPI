@@ -34,7 +34,11 @@ router.post('/signup', async (req, res) =>
                 {
                     "listName" : "On Pause",
                     "shows" : []
-                }
+                },
+                {
+                    "listName" : "Completed",
+                    "shows" : []
+                },
 
             ]
         });
