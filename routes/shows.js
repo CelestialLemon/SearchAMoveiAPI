@@ -42,7 +42,7 @@ const authenticateToken = (req, res, next) =>
 router.post('/showstatus', authenticateToken, async (req, res) =>
 {
     console.log("Request for show status at " + new Date());
-    console.log(req.body);
+    console.log('===========================================================');
     const userData = await UserModel.findOne({"username" : req.user.username});
 
     let found = false;
@@ -50,9 +50,9 @@ router.post('/showstatus', authenticateToken, async (req, res) =>
     {
         userData.lists[i].shows.forEach((show) => 
         {
-            if(show.showId == req.body.id)
+            if(show.showId == req.body.showId)
             {
-                res.send({"listName" : userData.lists[i].listName, "msg" : "found"});
+                res.send({"listName" : userData.lists[i].listName, "progress" : show.progress ,"msg" : "found"});
                 found = true;
             }
         })
@@ -60,5 +60,39 @@ router.post('/showstatus', authenticateToken, async (req, res) =>
     if(!found)
     res.send({'listName' : '', 'msg' : 'not found'});
 })
+
+router.post('/getshowfromlist', authenticateToken, async (req, res) =>
+{
+    console.log("Request for show from list at " + new Date());
+    const userData = await UserModel.findOne({"username" : req.user.username});
+    let found = false;
+    if(userData)
+    {
+        userData.lists.map(list =>
+            {
+                if(list.listName == req.body.listName)
+                {
+                    list.shows.map(show =>
+                        {
+                            if(show.showId == req.body.showId)
+                            {
+                                res.send({"listName" : list.listName, "progress" : show.progress, "episodesWatched" : show.episodesWatched})
+                                found = true;
+                            }
+                        })
+                }
+            })
+    }
+    else
+    {
+        res.send({"msg" : "not found"});
+    }
+
+    if(!found)
+    {
+        res.send({"msg" : "not found"})
+    }
+})
+
 
 module.exports = router

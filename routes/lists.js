@@ -87,7 +87,7 @@ router.post("/addshowtolist", authenticateToken, async (req, res, next) =>
                     })
 
                 if(!showAlreadyExists)
-                list.shows.push({"showId" : req.body.showId, "progress" : 0, "episodesWatched" : "0x0"});
+                list.shows.push({"showId" : req.body.showId, "progress" : req.body.progress, "episodesWatched" : "0x0"});
             }
 
         });
@@ -181,6 +181,7 @@ router.get("/userlists", authenticateToken, async (req, res) =>
         res.send({"msg" : "not found"});
     }
 })
+
 
 
 
