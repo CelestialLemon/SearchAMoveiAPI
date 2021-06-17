@@ -52,7 +52,7 @@ router.post('/showstatus', authenticateToken, async (req, res) =>
         {
             if(show.showId == req.body.showId)
             {
-                res.send({"listName" : userData.lists[i].listName, "progress" : show.progress ,"msg" : "found"});
+                res.send({"listName" : userData.lists[i].listName, "progress" : show.progress, "seasonsCompleted" : show.seasonsCompleted ,"msg" : "found"});
                 found = true;
             }
         })
@@ -92,6 +92,32 @@ router.post('/getshowfromlist', authenticateToken, async (req, res) =>
     {
         res.send({"msg" : "not found"})
     }
+})
+
+router.post('/updateProgress', authenticateToken, async (req, res) =>
+{
+    console.log("Request to update progress at " + new Date());
+    const userToUpdate = await UserModel.findOne({"username" : req.user.username});
+    console.log(userToUpdate.lists);
+    userToUpdate.lists.map(list =>
+        {
+            if(list.listName === req.body.listName)
+            {
+                list.shows.map(show =>
+                    {
+                        if(show.showId === req.body.showId)
+                        {
+                            show.progress = req.body.progress;
+                            show.seasonsCompleted = req.body.seasonsCompleted;
+                        }
+                    })
+            }
+            
+        });
+
+    
+    const updatedUser = await UserModel.findOneAndUpdate({"username" : req.user.username}, userToUpdate, {useFindAndModify : false});
+    res.send({"msg" : "modified"});
 })
 
 

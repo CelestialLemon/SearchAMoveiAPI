@@ -1,5 +1,4 @@
-const dbConnection = require('./models/db.connect')
-const UserModel = require('./models/user.model.js');
+const formatter = new Intl.DateTimeFormat('en', { month: 'short' });
+const month2 = formatter.format(new Date(2003, 11, 12));
 
-const newUser = UserModel({ username : "Ashutosh", password : "Nightmare22"});
-newUser.save();
+console.log(month2);

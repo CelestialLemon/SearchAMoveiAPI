@@ -87,7 +87,7 @@ router.post("/addshowtolist", authenticateToken, async (req, res, next) =>
                     })
 
                 if(!showAlreadyExists)
-                list.shows.push({"showId" : req.body.showId, "progress" : req.body.progress, "episodesWatched" : "0x0"});
+                list.shows.push({"showId" : req.body.showId, "progress" : req.body.progress, "seasonsCompleted" : 0});
             }
 
         });
@@ -107,31 +107,7 @@ router.post("/addshowtolist", authenticateToken, async (req, res, next) =>
 
 //update functions
 
-router.put('/updateProgress', authenticateToken, async (req, res) =>
-{
-    console.log("Request to update progress at " + new Date());
-    const userToUpdate = await UserModel.findOne({"username" : req.user.username});
-    console.log(userToUpdate.lists);
-    userToUpdate.lists.map(list =>
-        {
-            if(list.listName === req.body.listName)
-            {
-                list.shows.map(show =>
-                    {
-                        if(show.showId === req.body.showId)
-                        {
-                            show.progress = req.body.progress;
-                            show.episodesWatched = req.body.episodesWatched;
-                        }
-                    })
-            }
-            
-        });
 
-    
-    const updatedUser = await UserModel.findOneAndUpdate({"username" : req.user.username}, userToUpdate, {useFindAndModify : false});
-    res.send({"msg" : "modified"});
-})
 
 
 //delete functions
