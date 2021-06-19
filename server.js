@@ -11,7 +11,7 @@ const ShowsRouter = require('./routes/shows')
 
 const server = express();
 
-server.use(cors({credentials : true, origin : ['http://localhost:3000','https://search-a-movie-22.herokuapp.com/']}))
+server.use(cors({credentials : true, origin : '*'}))
 server.use(bodyParser.urlencoded({ extended: false }))
 server.use(bodyParser.json());
 
