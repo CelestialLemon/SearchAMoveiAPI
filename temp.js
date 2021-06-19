@@ -1,4 +1,10 @@
-const formatter = new Intl.DateTimeFormat('en', { month: 'short' });
-const month2 = formatter.format(new Date(2003, 11, 12));
+const someFunc = async () =>
+{
+    for(var i=0; i<55000; i++)
+    {
+    console.log('hmm')
+    }
+console.log('log2')
+}
 
-console.log(month2);
+someFunc();

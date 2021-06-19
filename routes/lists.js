@@ -158,6 +158,20 @@ router.get("/userlists", authenticateToken, async (req, res) =>
     }
 })
 
+router.get("/getcurrentlywatchingshows", authenticateToken, async (req, res) =>
+{
+    console.log("Request for currently watching shows at " + new Date());
+    const userData = await UserModel.findOne({"username" : req.user.username});
+    if(userData)
+    {
+        res.send(userData.lists[0].shows);
+    }
+    else
+    {
+        res.send({"msg" : "not found"});
+    }
+})
+
 
 
 

@@ -58,7 +58,6 @@ router.post('/signup', async (req, res) =>
 
 const authenticateToken = (req, res, next) =>
 {
-    console.log(req.headers)
     if(req.headers && req.headers['authorization'])
     {
         console.log("token found");
